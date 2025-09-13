@@ -1,0 +1,25 @@
+# Build output
+target/
+build/
+*.class
+*.jar
+*.war
+
+# IDE / Editor
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Logs
+*.log
+
+# Maven / Gradle
+.mvn/
+.gradle/
+gradle-app.setting
+
+# OS / system files
+*.DS_Store
+*.swp
