@@ -6,8 +6,8 @@ spring:
     name: user
   datasource:
     url: jdbc:postgresql://localhost:5432/user
-    username: kubuski01
-    password: Kubuski01@postgres
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,3 +16,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: ${JWT_SECRET}

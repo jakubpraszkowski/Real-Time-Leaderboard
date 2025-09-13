@@ -13,6 +13,33 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  user_app:
+    container_name: user_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://user_db:5432/users
+      - DATABASE_USERNAME=${POSTGRES_USER}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      user_db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "https://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
 
   pgadmin:
     container_name: pgadmin
@@ -34,5 +61,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
-  pgadmin:
+  postgres: {}
+  pgadmin: {}
